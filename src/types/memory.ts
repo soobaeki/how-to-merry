@@ -6,6 +6,10 @@ export interface Memory {
   date: string;
   story: string;
   unlocked: boolean;
-  x: number;
-  y: number;
+  progress: number; // 0.0 ~ 1.0
+  quiz?: {
+    question: string;
+    options: string[];
+    answer: number;
+  };
 }

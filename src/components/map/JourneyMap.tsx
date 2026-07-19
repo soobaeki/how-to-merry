@@ -1,10 +1,34 @@
 "use client";
 
 import { memories } from "@/data/memories";
+import { getPointOnPath } from "@/libs/utils";
 import { motion } from "framer-motion";
+import { useLayoutEffect, useRef, useState } from "react";
 import LocationNode from "./LocationNode";
 
 export default function JourneyMap() {
+  const pathRef = useRef<SVGPathElement>(null);
+  // 노드별 좌표를 저장하여 렌더링 시 배치에 사용
+  const [nodePositions, setNodePositions] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
+
+  // SVG 렌더링 직후 경로 좌표를 계산하여 노드 위치 확정
+  useLayoutEffect(() => {
+    if (!pathRef.current) return;
+
+    // 경로 상의 비율(progress)을 실제 픽셀 좌표로 변환
+    const positions = memories.reduce(
+      (acc, memory) => {
+        acc[memory.id] = getPointOnPath(pathRef.current, memory.progress);
+        return acc;
+      },
+      {} as Record<string, { x: number; y: number }>,
+    );
+
+    setNodePositions(positions);
+  }, []);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#FFF8F2]">
       {/* Background Decoration */}
@@ -37,24 +61,16 @@ export default function JourneyMap() {
         </motion.p>
       </header>
 
-      {/* World */}
+      {/* Section */}
 
-      <section
-        className="
-        relative
-        mx-auto
-        mt-20
-        h-[900px]
-        max-w-md
-        "
-      >
-        {/* Path */}
-
+      <section className="relative mx-auto mt-20 h-225 max-w-md">
         <svg
           className="absolute inset-0 h-full w-full"
           preserveAspectRatio="none"
         >
+          {/* Path */}
           <path
+            ref={pathRef} // ref 연결!
             d="M190 60 C 240 170 120 250 210 350 S 120 600 210 760"
             fill="none"
             stroke="#F9A8D4"
@@ -64,18 +80,30 @@ export default function JourneyMap() {
         </svg>
 
         {/* Nodes */}
-
-        {memories.map((memory) => (
-          <LocationNode key={memory.id} memory={memory} />
-        ))}
+        {memories.map((memory) => {
+          const pos = nodePositions[memory.id] || { x: 0, y: 0 };
+          return (
+            <div
+              key={memory.id}
+              style={{
+                position: "absolute",
+                left: pos.x,
+                top: pos.y,
+              }}
+            >
+              <LocationNode
+                memory={memory}
+                onClick={() => console.log("퀴즈 오픈:", memory.id)}
+              />
+            </div>
+          );
+        })}
       </section>
 
       {/* Progress */}
-
       <footer className="fixed bottom-8 left-1/2 z-20 w-80 -translate-x-1/2 rounded-full bg-white/80 p-4 shadow-xl backdrop-blur">
         <div className="mb-2 flex justify-between text-sm">
           <span>Journey Progress</span>
-
           <span>1 / {memories.length}</span>
         </div>
 
