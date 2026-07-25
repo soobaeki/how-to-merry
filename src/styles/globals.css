@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* ⬇️ custom ⬇️ */
+  --cream: #fff8f2;
+  --pink100: #fce7f3;
+  --pink300: #fda5d5;
+  --pink400: #f472b6;
+  --pink500: #f6339a;
+  --orange100: #ffedd5;
+  --yellow100: #fef9c2;
+  --gray200: #e5e7eb;
+  --gray300: #d1d5dc;
+  --gray500: #6a7282;
+  --gray600: #4a5565;
+  --gray700: #364153;
+  --gray800: #1e2939;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* ⬇️ custom ⬇️ */
+  --color-cream: var(--cream);
+  --color-pink100: var(--pink100);
+  --color-pink300: var(--pink300);
+  --color-pink400: var(--pink400);
+  --color-pink500: var(--pink500);
+  --color-orange100: var(--orange100);
+  --color-yellow100: var(--yellow100);
+  --color-gray200: var(--gray200);
+  --color-gray300: var(--gray300);
+  --color-gray500: var(--gray500);
+  --color-gray600: var(--gray600);
+  --color-gray700: var(--gray700);
+  --color-gray800: var(--gray800);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}

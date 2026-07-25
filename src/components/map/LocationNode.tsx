@@ -19,14 +19,14 @@ export default function LocationNode({ memory, onClick }: Props) {
         className={cn(
           "relative flex h-20 w-20 items-center justify-center rounded-full border-4 shadow-xl transition-all duration-300",
           memory.unlocked
-            ? "border-pink-300 bg-white"
-            : "border-gray-300 bg-gray-200",
+            ? "border-pink300 bg-white"
+            : "border-gray300 bg-gray200",
         )}
       >
         {memory.unlocked ? (
           <>
             <motion.div
-              className="absolute h-full w-full rounded-full bg-pink-300/20"
+              className="absolute h-full w-full rounded-full bg-pink300/20"
               animate={{ scale: [1, 1.35, 1], opacity: [0.4, 0.1, 0.4] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
@@ -34,17 +34,17 @@ export default function LocationNode({ memory, onClick }: Props) {
               animate={{ rotate: [0, 8, -8, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
-              <Sparkles size={30} className="text-pink-400" />
+              <Sparkles size={30} className="text-pink400" />
             </motion.div>
           </>
         ) : (
-          <Lock size={24} className="text-gray-500" />
+          <Lock size={24} className="text-gray500" />
         )}
       </div>
 
       <div className="mt-3 text-center">
-        <p className="text-xs font-semibold text-pink-500">{memory.chapter}</p>
-        <p className="text-sm font-medium text-gray-700">{memory.title}</p>
+        <p className="text-xs font-semibold text-pink500">{memory.chapter}</p>
+        <p className="text-sm font-medium text-gray700">{memory.title}</p>
       </div>
     </>
   );
