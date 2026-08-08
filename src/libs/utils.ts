@@ -28,3 +28,21 @@ export const getPointOnPath = (
 
   return pathElement.getPointAtLength(length * progress);
 };
+
+/**
+ * 시작일부터 오늘까지 지나온 일수(D+Day)를 계산합니다.
+ * @param startDateStr "YYYY-MM-DD" 형태의 날짜 문자열
+ * @returns 지나온 일수 (시작일 = 1일)
+ */
+export function calculateTogetherDays(startDateStr: string): number {
+  const start = new Date(startDateStr);
+  const today = new Date();
+
+  // 자정(00:00:00) 기준 날짜 차이 계산
+  start.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const diffTime = today.getTime() - start.getTime();
+  // 밀리초 -> 일(Day) 변환 (+1: 첫 만남일 포함)
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}

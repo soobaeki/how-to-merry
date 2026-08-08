@@ -23,8 +23,6 @@ export default function Hero() {
       >
         <h1 className="text-5xl font-bold text-pink400">OUR MEMORIES</h1>
 
-        <p className="mt-6 text-gray600">우리의 이야기를 다시 여행합니다.</p>
-
         <Link
           href="/journey"
           className={cn(

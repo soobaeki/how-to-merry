@@ -2,40 +2,53 @@
 
 import { memories as initialMemories } from "@/data/memories";
 import { Memory } from "@/types/memory";
-import { motion } from "framer-motion";
 import { RotateCcwIcon } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore } from "react";
+import JourneyHeader from "./JourneyHeader";
 import LocationNode from "./LocationNode";
 
+// 🎯 클라이언트 마운트 여부를 추적하는 리액트 공식 표준 커스텀 훅
+const emptySubscribe = () => () => {};
+function useIsClient() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true, // 브라우저 렌더링 시 true
+    () => false, // 서버(SSR) 렌더링 시 false
+  );
+}
+
 export default function JourneyMap() {
+  const isClient = useIsClient();
   const pathRef = useRef<SVGPathElement>(null);
 
-  // 🎯 useState 초기화 함수(Lazy Initialization) 활용
-  const [memories, setMemories] = useState<Memory[]>(() => {
-    // SSR/빌드 타임 에러 방지
-    if (typeof window === "undefined") return initialMemories;
+  // 1. 기본 raw memories 상태
+  const [rawMemories, setMemories] = useState<Memory[]>(initialMemories);
+
+  // 2. memories: 클라이언트 마운트 후에만 localStorage 데이터를 결합 (하이드레이션 방지)
+  const memories = useMemo(() => {
+    if (!isClient) return rawMemories;
 
     const savedUnlocked = localStorage.getItem("unlockedChapterIds");
     const unlockedIds: number[] = savedUnlocked
       ? JSON.parse(savedUnlocked)
       : [1]; // 기본 1번 챕터 해제
 
-    return initialMemories.map((memory) => ({
+    return rawMemories.map((memory) => ({
       ...memory,
       unlocked: unlockedIds.includes(memory.id),
     }));
-  });
+  }, [rawMemories, isClient]);
 
-  // 🎯 완료된 chapter
-  const [completedIds, setCompletedIds] = useState<number[]>(() => {
-    if (typeof window === "undefined") return [];
+  // 3. completedIds: state 초기화 대신 useMemo로 마운트 후 localStorage에서 가져옴
+  const completedIds = useMemo<number[]>(() => {
+    if (!isClient) return [];
 
     const rawCompletedIds = localStorage.getItem("completedChapterIds");
     if (rawCompletedIds) {
       return JSON.parse(rawCompletedIds);
     }
     return [];
-  });
+  }, [isClient]);
 
   // 🎯 memories 개수에 따라 SVG d 경로와 컨테이너 높이를 동적으로 계산
   const { pathD, containerHeight } = useMemo(() => {
@@ -105,7 +118,6 @@ export default function JourneyMap() {
 
     // memories 초기화
     setMemories([]);
-    setCompletedIds([]);
 
     // 새로고침
     window.location.reload();
@@ -136,24 +148,7 @@ export default function JourneyMap() {
       </button>
 
       {/* Header */}
-      <header className="relative z-10 pt-12 pb-12 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-gray800"
-        >
-          OUR JOURNEY
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-2 text-gray600"
-        >
-          우리의 추억을 다시 여행해 보자
-        </motion.p>
-      </header>
+      <JourneyHeader />
 
       {/* Section */}
       <section
@@ -162,7 +157,7 @@ export default function JourneyMap() {
       >
         <svg
           className="absolute inset-0 h-full w-full"
-          viewBox="0 0 380 ${containerHeight}"
+          viewBox={`0 0 380 ${containerHeight}`}
           preserveAspectRatio="none"
         >
           {/* Path */}
