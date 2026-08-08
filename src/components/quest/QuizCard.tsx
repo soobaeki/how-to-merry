@@ -41,7 +41,7 @@ export default function QuizCard({
       <div className="mt-6 flex flex-col gap-3">
         {options.map((option, index) => {
           let btnStyle =
-            "border-gray-200 bg-gray-50 text-gray-700 hover:bg-pink-50 hover:border-pink-300";
+            "border-gray-200 bg-gray-50 text-gray-700 hover:bg-pink-50 hover:border-pink-300 cursor-pointer";
 
           if (selected !== null) {
             if (index === answerIndex) {
@@ -80,7 +80,7 @@ export default function QuizCard({
               <p className="mt-1 text-sm text-gray-600">{explanation}</p>
               <button
                 onClick={onCorrect}
-                className="mt-4 w-full rounded-full bg-pink-400 py-3 text-white font-semibold shadow-md hover:bg-pink-500 transition"
+                className="mt-4 w-full rounded-full bg-pink-400 py-3 text-white font-semibold shadow-md hover:bg-pink-500 transition cursor-pointer"
               >
                 다음 추억으로 넘어가기 ✨
               </button>
@@ -94,7 +94,7 @@ export default function QuizCard({
                   setSelected(null);
                   setIsCorrect(null);
                 }}
-                className="mt-4 w-full rounded-full bg-gray-300 py-3 text-gray-700 font-semibold hover:bg-gray-400 transition"
+                className="mt-4 w-full rounded-full bg-gray-300 py-3 text-gray-700 font-semibold hover:bg-gray-400 transition cursor-pointer"
               >
                 다시 고르기
               </button>

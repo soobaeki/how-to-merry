@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- 부드러운 분홍 배경 -->
+  <rect width="32" height="32" rx="8" fill="#FFF1F2" />
+  
+  <!-- 여정을 나타내는 S자 곡선 점선 -->
+  <path 
+    d="M6 24C10 24 10 16 16 16C22 16 22 10 24 8" 
+    fill="none" 
+    stroke="#FDA4AF" 
+    stroke-width="2.5" 
+    stroke-linecap="round" 
+    stroke-dasharray="2 3"
+  />
+  
+  <!-- 출발점 노드 -->
+  <circle cx="6" cy="24" r="2.5" fill="#F43F5E" />
+  
+  <!-- 최종 도착지: 결혼 하트 핀 -->
+  <path 
+    d="M24 5C21.8 5 20 6.8 20 9C20 12.5 24 16 24 16C24 16 28 12.5 28 9C28 6.8 26.2 5 24 5Z" 
+    fill="#E11D48" 
+  />
+</svg>

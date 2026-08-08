@@ -26,6 +26,17 @@ export default function JourneyMap() {
     }));
   });
 
+  // 🎯 완료된 chapter
+  const [completedIds, setCompletedIds] = useState<number[]>(() => {
+    if (typeof window === "undefined") return [];
+
+    const rawCompletedIds = localStorage.getItem("completedChapterIds");
+    if (rawCompletedIds) {
+      return JSON.parse(rawCompletedIds);
+    }
+    return [];
+  });
+
   // 🎯 memories 개수에 따라 SVG d 경로와 컨테이너 높이를 동적으로 계산
   const { pathD, containerHeight } = useMemo(() => {
     const totalNodes = memories.length;
@@ -61,6 +72,7 @@ export default function JourneyMap() {
   }, [memories.length]);
 
   // 🎯 memories 배열을 순회하며 각 노드의 (x, y) 좌표를 계산
+
   const nodePositions = useMemo(() => {
     const NODE_SPACING_Y = 190;
     const START_Y = 60;
@@ -89,13 +101,18 @@ export default function JourneyMap() {
   const handleReset = () => {
     // LocalStorage에서 해당 키 삭제
     localStorage.removeItem("unlockedChapterIds");
+    localStorage.removeItem("completedChapterIds");
 
     // memories 초기화
     setMemories([]);
+    setCompletedIds([]);
 
     // 새로고침
     window.location.reload();
   };
+
+  // 모든 챕터가 클리어되었는지 확인
+  const isAllCompleted = memories.every((m) => completedIds.includes(m.id));
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-cream">
@@ -153,8 +170,12 @@ export default function JourneyMap() {
             ref={pathRef} // ref 연결!
             // d="M190 60 C 240 170 120 250 210 350 S 120 600 210 860"
             d={pathD}
+            className={
+              isAllCompleted
+                ? "stroke-pink-500 animate-pulse drop-shadow-[0_0_8px_rgba(244,114,182,0.8)]"
+                : "stroke-gray-300"
+            }
             fill="none"
-            stroke="#F9A8D4"
             strokeWidth="6"
             strokeDasharray="10 10"
           />
@@ -164,6 +185,9 @@ export default function JourneyMap() {
         {memories.map((memory) => {
           const pos = nodePositions[memory.id] || { x: 0, y: 0 };
 
+          // 완료여부
+          const isCompleted = completedIds.includes(memory.id);
+
           return (
             <div
               key={memory.id}
@@ -172,9 +196,15 @@ export default function JourneyMap() {
                 left: pos.x,
                 top: pos.y,
               }}
+              className={
+                !memory.unlocked || isCompleted
+                  ? "pointer-events-none"
+                  : "cursor-pointer"
+              }
             >
               <LocationNode
                 memory={memory}
+                isCompleted={isCompleted}
                 onClick={() => console.log("퀴즈 오픈:", memory.id)}
               />
             </div>

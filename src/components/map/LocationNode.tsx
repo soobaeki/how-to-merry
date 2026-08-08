@@ -3,26 +3,41 @@
 import { cn } from "@/libs/utils";
 import { Memory } from "@/types/memory";
 import { motion } from "framer-motion";
-import { Lock, Sparkles } from "lucide-react";
+import { Check, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 interface Props {
   memory: Memory;
+  isCompleted?: boolean;
   onClick?: () => void; // 퀴즈 모달 호출을 위해 추가
 }
 
-export default function LocationNode({ memory, onClick }: Props) {
+export default function LocationNode({ memory, isCompleted, onClick }: Props) {
   // 열린 노드라면 Link로, 잠긴 노드라면 button(onClick)으로 렌더링합니다.
   const Content = (
     <>
       <div
         className={cn(
           "relative flex h-20 w-20 items-center justify-center rounded-full border-4 shadow-xl transition-all duration-300",
-          memory.unlocked
-            ? "border-pink300 bg-white"
-            : "border-gray300 bg-gray200",
+          isCompleted
+            ? "border-emerald-400 bg-emerald-50" // 🎯 완료된 상태 테두리/배경
+            : memory.unlocked
+              ? "border-pink300 bg-white"
+              : "border-gray300 bg-gray200",
         )}
       >
+        {/* 🎯 1. 완장(뱃지) UI: isCompleted가 true일 때 우측 상단에 표시 */}
+        {isCompleted && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="absolute -right-1 -top-1 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-white shadow-md ring-2 ring-white"
+          >
+            <Check size={16} className="stroke-3" />
+          </motion.div>
+        )}
+
         {memory.unlocked ? (
           <>
             <motion.div

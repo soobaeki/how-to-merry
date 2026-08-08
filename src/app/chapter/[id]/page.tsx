@@ -16,19 +16,29 @@ export default function Chapter() {
   // 🎯 정답 성공 시 실행될 처리 함수
   const handleCorrect = () => {
     if (typeof window !== "undefined") {
-      // 1. 기존 unlocked 목록 불러오기 (기본값: [1])
+      // unlocked 목록 불러오기 (기본값: [1])
       const savedUnlocked = localStorage.getItem("unlockedChapterIds");
       const unlockedIds: number[] = savedUnlocked
         ? JSON.parse(savedUnlocked)
         : [1];
 
-      // 2. 현재 챕터 + 다음 챕터(chapterId + 1)를 목록에 추가 (중복 제거)
+      // 현재 챕터 + 다음 챕터(chapterId + 1)를 목록에 추가 (중복 제거)
       const updatedIds = Array.from(
         new Set([...unlockedIds, chapterId, chapterId + 1]),
       );
 
-      // 3. localStorage에 최신화된 목록 저장
+      // localStorage에 최신화된 목록 저장
       localStorage.setItem("unlockedChapterIds", JSON.stringify(updatedIds));
+
+      const completed = JSON.parse(
+        localStorage.getItem("completedChapterIds") || "[]",
+      );
+      if (!completed.includes(chapterId)) {
+        localStorage.setItem(
+          "completedChapterIds",
+          JSON.stringify([...completed, chapterId]),
+        );
+      }
     }
 
     // 4. 저장 완료 후 지도로 돌아가기
