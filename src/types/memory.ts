@@ -10,5 +10,6 @@ export interface Memory {
     question: string;
     options: string[];
     answer: number;
+    hint?: string[];
   };
 }

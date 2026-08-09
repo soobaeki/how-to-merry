@@ -9,11 +9,9 @@ import Link from "next/link";
 interface Props {
   memory: Memory;
   isCompleted?: boolean;
-  onClick?: () => void; // 퀴즈 모달 호출을 위해 추가
 }
 
-export default function LocationNode({ memory, isCompleted, onClick }: Props) {
-  // 열린 노드라면 Link로, 잠긴 노드라면 button(onClick)으로 렌더링합니다.
+export default function LocationNode({ memory, isCompleted }: Props) {
   const Content = (
     <>
       <div
@@ -89,13 +87,20 @@ export default function LocationNode({ memory, isCompleted, onClick }: Props) {
     >
       {memory.unlocked ? (
         <Link
+          // 해제된 노드: 해당 챕터로 바로 이동
           href={`/chapter/${memory.id}`}
           className="group block cursor-pointer"
         >
           {Content}
         </Link>
       ) : (
-        <button onClick={onClick} className="group block cursor-pointer">
+        <button
+          // 잠긴 노드: 아예 누를 수 없음 (pointer-events-none & disabled)
+          type="button"
+          disabled
+          tabIndex={-1}
+          className="group block cursor-not-allowed pointer-events-none select-none"
+        >
           {Content}
         </button>
       )}
