@@ -91,3 +91,12 @@ export function calculateTogetherDays(startDateStr: string): number {
   // 밀리초 -> 일(Day) 변환 (+1: 첫 만남일 포함)
   return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 }
+
+/**
+ * 배열에서 무작위 요소 1개를 추출합니다.
+ */
+export function getRandomElement<T>(array: T[]): T | undefined {
+  if (!array || array.length === 0) return undefined;
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}

@@ -48,13 +48,46 @@ export function useJourneyState() {
   // ➔ 서버는 일단 안전한 기본값으로 HTML을 만듭니다.
   // 2. 브라우저에 마운트되는 순간 isClient가 true로 전환됩니다.
   // ➔ 그제야 localStorage에서 읽어온 진짜 unlockedIds와 completedIds를 사용해 화면을 업데이트합니다.
-  const currentUnlockedIds = isClient ? unlockedIds : [1];
+  const currentUnlockedIds = isClient ? unlockedIds : [];
   const currentCompletedIds = isClient ? completedIds : [];
 
   const memories: Memory[] = initialMemories.map((memory) => ({
     ...memory,
     unlocked: currentUnlockedIds.includes(memory.id),
   }));
+
+  // 전체 완료여부
+  const isAllCompleted =
+    memories.length > 0 &&
+    memories.every((m) => currentCompletedIds.includes(m.id));
+
+  // 챕터 완료 및 다음 챕터 해금 처리 함수 추가
+  const completeChapter = useCallback((chapterId: number) => {
+    if (typeof window === "undefined") return;
+
+    // 현재 챕터 + 다음 챕터(chapterId + 1)를 해금 목록에 추가 (중복 제거)
+    setUnlockedIds((prev) => {
+      const nextUnlocked = Array.from(
+        new Set([...prev, chapterId, chapterId + 1]),
+      );
+
+      localStorage.setItem(STORAGE_KEYS.UNLOCKED, JSON.stringify(nextUnlocked));
+      return nextUnlocked;
+    });
+
+    // 현재 챕터를 완료 목록에 추가
+    setCompletedIds((prev) => {
+      if (prev.includes(chapterId)) return prev;
+
+      const nextCompleted = [...prev, chapterId];
+
+      localStorage.setItem(
+        STORAGE_KEYS.COMPLETED,
+        JSON.stringify(nextCompleted),
+      );
+      return nextCompleted;
+    });
+  }, []);
 
   // 진행 상황 초기화
   const resetJourney = useCallback(() => {
@@ -67,13 +100,10 @@ export function useJourneyState() {
     setCompletedIds([]);
   }, []);
 
-  const isAllCompleted =
-    memories.length > 0 &&
-    memories.every((m) => currentCompletedIds.includes(m.id));
-
   return {
     memories,
     completedIds: currentCompletedIds,
+    completeChapter,
     isAllCompleted,
     resetJourney,
   };

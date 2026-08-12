@@ -6,7 +6,7 @@ export const memories: Memory[] = [
     chapter: "Chapter 01",
     title: "처음 만난 날",
     location: "히어로스터 카페(신도림)",
-    date: "2026.03.07",
+    date: "2026.02.14",
     story: "처음에는 조금 긴장했지만 우리는 3시간 동안 계속 이야기했어.",
     unlocked: true,
     quiz: {
@@ -14,6 +14,11 @@ export const memories: Memory[] = [
       먹은 음식은 무엇일까요?`,
       options: ["고기", "초밥", "파스타", "라면"],
       answer: 2,
+      hint: [
+        "처음 봤을 때 미소가 아직도 선명해요 💕",
+        "아쉬워요! 조금만 더 고민해봐요!",
+        "힌트: 매콤한 것과 오일리한 것 두개 주문했었는데~~ 🌶️🫒",
+      ],
     },
   },
   {
