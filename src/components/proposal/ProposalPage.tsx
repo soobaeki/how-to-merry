@@ -2,8 +2,7 @@
 
 import { useJourneyState } from "@/hooks/useJourneyState";
 import { AnimatePresence, motion } from "framer-motion";
-import { MapPin, RotateCcw, X } from "lucide-react"; // lucide-react 아이콘 사용
-import Link from "next/link";
+import { RotateCcw, X } from "lucide-react"; // lucide-react 아이콘 사용
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -50,6 +49,7 @@ export default function ProposalPage() {
             src="/videos/proposal.mp4"
             autoPlay
             playsInline
+            controls
             onEnded={handleVideoEnd}
             className="h-full w-full rounded-2xl object-cover shadow-2xl"
           />
@@ -97,13 +97,13 @@ export default function ProposalPage() {
               </button>
 
               {/* 추억 지도로 돌아가기 버튼 */}
-              <Link
+              {/* <Link
                 href="/journey"
                 className="inline-flex items-center gap-2 rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-pink-600 active:scale-95"
               >
                 <MapPin size={16} />
                 돌아가기
-              </Link>
+              </Link> */}
             </motion.div>
           </motion.div>
         )}

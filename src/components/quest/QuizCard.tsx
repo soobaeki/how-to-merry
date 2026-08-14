@@ -35,7 +35,7 @@ export default function QuizCard({
     // 🎯 틀렸을 경우 hints 배열에서 무작위로 1개 선택
     if (!correct) {
       if (hints && hints.length > 0) {
-        const randomIndex = (getRandomElement(hints) ?? 1) as number;
+        const randomIndex = Number(getRandomElement(hints) ?? 1);
         setRandomHint(hints[randomIndex]);
       } else {
         setRandomHint("앗, 이건 아니었는데 ㅋㅋ"); // hints가 비어있을 때 기본 문구

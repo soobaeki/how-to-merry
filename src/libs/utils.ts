@@ -93,10 +93,9 @@ export function calculateTogetherDays(startDateStr: string): number {
 }
 
 /**
- * 배열에서 무작위 요소 1개를 추출합니다.
+ * 배열에서 무작위 값을 추출합니다.
  */
-export function getRandomElement<T>(array: T[]): T | undefined {
+export function getRandomElement<T>(array: T[]): number | undefined {
   if (!array || array.length === 0) return undefined;
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
+  return Math.floor(Math.random() * array.length);
 }
