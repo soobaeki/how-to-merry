@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- 배경 로맨틱 그라데이션 -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0F5"/>
+      <stop offset="50%" stop-color="#FFE4E1"/>
+      <stop offset="100%" stop-color="#FFD1DC"/>
+    </linearGradient>
+
+    <!-- 카드 은은한 그림자 효과 -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#DB7093" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- 골드 텍스트 그라데이션 -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#F3E5AB"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. 메인 배경 -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+
+  <!-- 2. 은은한 로맨틱 패턴 (반짝이는 빛/하트) -->
+  <circle cx="150" cy="120" r="4" fill="#FFB6C1" opacity="0.6"/>
+  <circle cx="1050" cy="180" r="6" fill="#FFB6C1" opacity="0.5"/>
+  <circle cx="980" cy="500" r="5" fill="#FFB6C1" opacity="0.6"/>
+  <circle cx="200" cy="480" r="7" fill="#FFB6C1" opacity="0.4"/>
+  
+  <!-- 3. 중앙 흰색 감성 테두리 카드 -->
+  <rect x="100" y="80" width="1000" height="470" rx="24" fill="#FFFFFF" opacity="0.85" filter="url(#shadow)"/>
+  <rect x="115" y="95" width="970" height="440" rx="16" fill="none" stroke="#FFD1DC" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <!-- 4. 프러포즈 반지 아트워크 -->
+  <g transform="translate(600, 220)">
+    <!-- 반짝이는 빛 효과 -->
+    <path d="M 0,-65 L 4,-45 L 24,-45 L 8,-33 L 14,-13 L 0,-25 L -14,-13 L -8,-33 L -24,-45 L -4,-45 Z" fill="#FFE57F" opacity="0.9"/>
+    <!-- 다이아몬드 -->
+    <polygon points="0,-45 -18,-25 0,-15 18,-25" fill="#E0F7FA" stroke="#80DEEA" stroke-width="2"/>
+    <polygon points="-18,-25 0,-45 0,-15" fill="#B2EBF2"/>
+    <!-- 반지 링 -->
+    <circle cx="0" cy="15" r="32" fill="none" stroke="url(#gold-grad)" stroke-width="7"/>
+    <circle cx="0" cy="15" r="35" fill="none" stroke="#FFF8E1" stroke-width="1" opacity="0.8"/>
+  </g>
+
+  <!-- 5. 타이틀 및 서브 텍스트 -->
+  <text x="600" y="360" font-family="'Pretendard', 'Apple SD Gothic Neo', sans-serif" font-size="44" font-weight="700" fill="#4A3E3D" text-anchor="middle" letter-spacing="-1">
+    우리의 소중한 이야기 💍
+  </text>
+  
+  <text x="600" y="420" font-family="'Pretendard', 'Apple SD Gothic Neo', sans-serif" font-size="24" font-weight="400" fill="#8C7A78" text-anchor="middle" letter-spacing="-0.5">
+    함께 걸어온 시간, 그리고 앞으로 시작될 우리 둘만의 특별한 공간
+  </text>
+
+  <!-- 6. 하단 포인트 데코 -->
+  <path d="M 570 460 Q 600 475 630 460" fill="none" stroke="#FFB6C1" stroke-width="3" stroke-linecap="round"/>
+  <text x="600" y="495" font-family="'Pretendard', 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#D87093" text-anchor="middle" font-weight="600">
+    HOW TO MERRY
+  </text>
+</svg>

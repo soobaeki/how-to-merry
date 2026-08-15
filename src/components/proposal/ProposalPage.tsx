@@ -51,7 +51,6 @@ export default function ProposalPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
           className="relative h-full w-full max-w-4xl px-4"
         >
           {videoSrc ? (

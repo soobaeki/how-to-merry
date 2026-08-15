@@ -14,8 +14,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Marriage",
-  description: "pop the question",
+  metadataBase: new URL("https://soobaeki.github.io/how-to-merry"),
+
+  title: "Marriage 💍",
+  description: "소중한 추억과 마음을 담아 만든 특별한 공간입니다.",
+
+  icons: {
+    icon: "/icon.svg",
+  },
+
+  openGraph: {
+    title: "Marriage 💍",
+    description: "소중한 추억과 마음을 담아 만든 특별한 공간입니다.",
+    url: "/",
+    siteName: "How to Merry",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "How to Merry Preview",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

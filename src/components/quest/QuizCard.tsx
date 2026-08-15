@@ -56,7 +56,6 @@ export default function QuizCard({
       <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line">
         {question}
       </h2>
-      <p className="mt-1 text-sm text-gray-500">알맞은 추억을 골라봐!</p>
 
       {/* 3~4지선다 보기 버튼들 */}
       <div className="mt-6 flex flex-col gap-3">
@@ -109,7 +108,6 @@ export default function QuizCard({
           ) : (
             <>
               <p className="font-bold text-red-400">{randomHint}</p>
-              <p className="mt-1 text-sm text-gray-600">다시 생각해 봐!</p>
               <button
                 onClick={handleReset}
                 className="mt-4 w-full rounded-full bg-gray-300 py-3 text-gray-700 font-semibold hover:bg-gray-400 transition cursor-pointer"
