@@ -47,3 +47,6 @@ src/data/memories.ts
 public/videos/*
 # 단, .gitkeep 파일은 추적 대상에 포함
 !public/videos/.gitkeep
+
+# scripts/ 폴더 내 모든 파일 무시
+scripts/*
