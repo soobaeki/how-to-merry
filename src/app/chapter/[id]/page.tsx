@@ -7,6 +7,15 @@ import { cn } from "@/libs/utils";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
+/**
+ * GitHub Pages 같은 정적 서버는 서버 측 연산(SSR)을 할 수 없기 때문에,
+ * /chapter/[id]와 같은 동적 라우트(Dynamic Route) 페이지가 있다면
+ * 빌드 시점에 어떤 [id] 페이지들(예: 1, 2, 3, 4, 5)을 미리 HTML로 만들어 둘지 명시해 주어야 합니다.
+ */
+export async function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }];
+}
+
 export default function Chapter() {
   const params = useParams();
   const router = useRouter();
