@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "encrypt": "tsx scripts/encrypt-data.ts",
-    "encrypt:video": "node scripts/encrypt-video.mjs"
+    "encrypt:video": "node scripts/encrypt-video.mjs",
+    "encrypt:all": "npm run encrypt && npm run encrypt:video"
   },
   "dependencies": {
     "clsx": "^2.1.1",
