@@ -6,6 +6,8 @@ import { RotateCcw, X } from "lucide-react"; // lucide-react 아이콘 사용
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const basePath = process.env.NODE_ENV === "production" ? "/how-to-marry" : "";
+
 export default function ProposalPage() {
   const router = useRouter();
   const { resetJourney } = useJourneyState();
@@ -46,7 +48,7 @@ export default function ProposalPage() {
           className="relative h-full w-full max-w-4xl px-4"
         >
           <video
-            src="/videos/proposal.mp4"
+            src={`${basePath}/videos/proposal.mp4`}
             autoPlay
             playsInline
             controls
