@@ -1,4 +1,4 @@
-import { memories as initialMemories } from "@/data/memories";
+import { useMemories } from "@/app/context/MemoryContext";
 import { Memory } from "@/types/memory";
 import { useCallback, useState, useSyncExternalStore } from "react";
 
@@ -32,6 +32,9 @@ function getStorageData<T>(key: string, defaultValue: T): T {
 
 export function useJourneyState() {
   const isClient = useIsClient();
+
+  // Context에서 복호화된 추억 데이터를 가져옵니다.
+  const initialMemories = useMemories();
 
   // Unlocked IDs State (초기값을 Lazy Function으로 가져옴)
   const [unlockedIds, setUnlockedIds] = useState<number[]>(() =>

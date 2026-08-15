@@ -1,17 +1,24 @@
 "use client";
 
 import { useJourneyState } from "@/hooks/useJourneyState";
+import { decryptProposalVideo } from "@/libs/crypto";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw, X } from "lucide-react"; // lucide-react 아이콘 사용
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-const basePath = process.env.NODE_ENV === "production" ? "/how-to-marry" : "";
+const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY || "";
 
 export default function ProposalPage() {
   const router = useRouter();
   const { resetJourney } = useJourneyState();
   const [isVideoEnded, setIsVideoEnded] = useState(false);
+
+  // secretKey를 사용해 암호화된 영상을 Base64 Data URL로 복호화
+  const videoSrc = useMemo(() => {
+    if (!secretKey) return null;
+    return decryptProposalVideo(secretKey);
+  }, []);
 
   // 영상이 끝났을 때 실행될 핸들러
   const handleVideoEnd = () => {
@@ -47,14 +54,23 @@ export default function ProposalPage() {
           transition={{ duration: 1 }}
           className="relative h-full w-full max-w-4xl px-4"
         >
-          <video
-            src={`${basePath}/videos/proposal.mp4`}
-            autoPlay
-            playsInline
-            controls
-            onEnded={handleVideoEnd}
-            className="h-full w-full rounded-2xl object-cover shadow-2xl"
-          />
+          {videoSrc ? (
+            <video
+              src={videoSrc} /* 복호화된 Data URL 적용 */
+              autoPlay
+              playsInline
+              controls
+              onEnded={handleVideoEnd}
+              className="h-full w-full rounded-2xl object-cover shadow-2xl"
+            />
+          ) : (
+            /* 비밀키가 없거나 복호화 중일 때 스켈레톤/로딩 표시 */
+            <div className="flex h-96 w-full items-center justify-center rounded-2xl bg-white/5 backdrop-blur-md">
+              <p className="animate-pulse text-sm text-pink-200">
+                영상을 준비하는 중입니다...
+              </p>
+            </div>
+          )}
         </motion.div>
       )}
 
