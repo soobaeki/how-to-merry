@@ -1,7 +1,6 @@
 "use client";
 
 import QuizCard from "@/components/quest/QuizCard";
-import { memories } from "@/data/memories";
 import { useJourneyState } from "@/hooks/useJourneyState";
 import { cn } from "@/libs/utils";
 import Link from "next/link";
@@ -10,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 export default function ChapterClient() {
   const params = useParams();
   const router = useRouter();
-  const { completeChapter } = useJourneyState();
+  const { memories, completeChapter } = useJourneyState();
 
   const chapterId = Number(params.id);
   const memory = memories.find((m) => m.id === chapterId);
