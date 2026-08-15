@@ -42,5 +42,8 @@ next-env.d.ts
 
 # 원본 데이터 및 미디어 파일 Git 추적 제외
 src/data/memories.ts
-public/videos/
+
+# public/videos 폴더 내 모든 파일 무시
+public/videos/*
+# 단, .gitkeep 파일은 추적 대상에 포함
 !public/videos/.gitkeep
