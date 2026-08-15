@@ -2,7 +2,7 @@ name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: ["main"] # 또는 master (본인의 기본 브랜치명)
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -32,6 +32,8 @@ jobs:
         run: npm ci
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
         run: npm run build
 
       - name: Upload artifact
