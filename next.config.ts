@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   output: "export", // 🎯 정적 HTML 내보내기 설정
   basePath: isProd ? `/${repositoryName}` : "", // 프로덕션 빌드 시 경로 맞춤
-  assetPrefix: isProd ? `/${repositoryName}/` : "",
   images: {
     unoptimized: true, // GitHub Pages는 Next.js 기본 이미지 최적화 서버를 지원하지 않으므로 설정 필요
   },
