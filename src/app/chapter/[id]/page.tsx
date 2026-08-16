@@ -1,4 +1,4 @@
-import { TOTAL_CHAPTER_COUNT } from "@/data/memories-encrypted";
+import { TOTAL_CHAPTER_COUNT } from "@/data/data-encrypted";
 import ChapterClient from "./ChapterClient";
 
 /**

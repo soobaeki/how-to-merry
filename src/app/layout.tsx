@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { MemoryProvider } from "./context/MemoryContext";
+import AppInitializer from "./context/AppInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,9 +53,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <MemoryProvider>
+        <AppInitializer>
           <main className="flex-1 flex flex-col">{children}</main>
-        </MemoryProvider>
+        </AppInitializer>
       </body>
     </html>
   );

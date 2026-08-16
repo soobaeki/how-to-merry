@@ -1,14 +1,10 @@
-import { ENCRYPTED_PROPOSAL_VIDEO } from "@/data/proposal-video";
+import { ENCRYPTED_PROPOSAL_MUSIC } from "@/data/music-encrypted";
+import { ENCRYPTED_PROPOSAL_VIDEO } from "@/data/video-encrypted";
 import CryptoJS from "crypto-js";
 
-// AES-GCM 256 비트 암호화/복호화 유틸리티
-const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || "";
-
-if (!ENCRYPTION_KEY) {
-  throw new Error("❌ NEXT_PUBLIC_SECRET_KEY 환경 변수가 설정되지 않았습니다!");
-}
-
-// 🔑 키를 동적으로 가져오는 유틸리티 (호이스팅 에러 방지)
+/**
+ * 🔑 비밀키를 안전하게 가져오는 유틸리티 (환경변수 누락 시 런타임 에러)
+ */
 function getSecretKey(): string {
   const key = process.env.NEXT_PUBLIC_SECRET_KEY;
   if (!key) {
@@ -19,6 +15,9 @@ function getSecretKey(): string {
   return key;
 }
 
+/**
+ * 🔐 Web Crypto API용 AES-GCM 256비트 키 생성
+ */
 async function getKey() {
   const secret = getSecretKey();
   const enc = new TextEncoder();
@@ -44,7 +43,9 @@ async function getKey() {
   );
 }
 
-// 텍스트 암호화
+/**
+ * 🔒 텍스트/JSON 데이터 암호화 (Web Crypto API)
+ */
 export async function encryptData(text: string): Promise<string> {
   const key = await getKey();
   const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -60,7 +61,6 @@ export async function encryptData(text: string): Promise<string> {
   combined.set(iv, 0);
   combined.set(new Uint8Array(ciphertext), iv.length);
 
-  // 👈 스택 오버플로우 방지를 위한 안전한 Base64 변환
   let binary = "";
   for (let i = 0; i < combined.byteLength; i++) {
     binary += String.fromCharCode(combined[i]);
@@ -69,7 +69,9 @@ export async function encryptData(text: string): Promise<string> {
   return btoa(binary);
 }
 
-// 암호문 복호화 (앱 실행 시 사용)
+/**
+ * 🔓 암호화된 텍스트/JSON 데이터 복호화 (Web Crypto API)
+ */
 export async function decryptData<T>(encryptedBase64: string): Promise<T> {
   const binary = atob(encryptedBase64);
   const combined = new Uint8Array(binary.length);
@@ -91,14 +93,34 @@ export async function decryptData<T>(encryptedBase64: string): Promise<T> {
   return JSON.parse(jsonString) as T;
 }
 
-// 동영상 복호화
-export function decryptProposalVideo(secretKey: string): string | null {
+/**
+ * 🎬 동영상 데이터 복호화 (CryptoJS)
+ */
+export function decryptVideo(customKey?: string): string | null {
   try {
-    const bytes = CryptoJS.AES.decrypt(ENCRYPTED_PROPOSAL_VIDEO, secretKey);
+    const key = customKey || getSecretKey();
+    const bytes = CryptoJS.AES.decrypt(ENCRYPTED_PROPOSAL_VIDEO, key);
     const decryptedUrl = bytes.toString(CryptoJS.enc.Utf8);
+
     return decryptedUrl || null;
   } catch (error) {
-    console.error("영상 복호화 실패:", error);
+    console.error("❌ 영상 복호화 실패:", error);
+    return null;
+  }
+}
+
+/**
+ * 🎵 배경음악(BGM) 데이터 복호화 (CryptoJS)
+ */
+export function decryptMusic(customKey?: string): string | null {
+  try {
+    const key = customKey || getSecretKey();
+    const bytes = CryptoJS.AES.decrypt(ENCRYPTED_PROPOSAL_MUSIC, key);
+    const decryptedUrl = bytes.toString(CryptoJS.enc.Utf8);
+
+    return decryptedUrl || null;
+  } catch (error) {
+    console.error("❌ 음악 복호화 실패:", error);
     return null;
   }
 }

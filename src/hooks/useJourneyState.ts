@@ -1,4 +1,4 @@
-import { useMemories } from "@/app/context/MemoryContext";
+import { useMemories } from "@/stores/useDataStore";
 import { Memory } from "@/types/memory";
 import { useCallback, useState, useSyncExternalStore } from "react";
 
