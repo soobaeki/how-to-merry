@@ -51,7 +51,7 @@ export function useJourneyState() {
   // ➔ 서버는 일단 안전한 기본값으로 HTML을 만듭니다.
   // 2. 브라우저에 마운트되는 순간 isClient가 true로 전환됩니다.
   // ➔ 그제야 localStorage에서 읽어온 진짜 unlockedIds와 completedIds를 사용해 화면을 업데이트합니다.
-  const currentUnlockedIds = isClient ? unlockedIds : [];
+  const currentUnlockedIds = isClient ? unlockedIds : [1];
   const currentCompletedIds = isClient ? completedIds : [];
 
   const memories: Memory[] = initialMemories.map((memory) => ({
