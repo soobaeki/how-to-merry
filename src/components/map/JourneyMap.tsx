@@ -21,34 +21,28 @@ export default function JourneyMap() {
   const router = useRouter();
 
   // ─── Custom Hooks & Store Selectors ─────────────────────────────────────────
-  // 1. 여정 상태 제어 커스텀 훅
+  // 여정 상태 제어 커스텀 훅
   const { memories, completedIds, isAllCompleted, resetJourney } =
     useJourneyState();
 
-  // 2. Zustand BGM 음악 스토어 구독
+  // Zustand BGM 음악 스토어 구독
   const isMusicPlaying = useIsMusicPlaying();
   const { toggleMusicPlay, setMusicPlaying } = useMusicActions();
 
   // ─── Layout Calculations ───────────────────────────────────────────────────
-  // 3. SVG 곡선 경로 및 높이 계산 (libs/utils.ts 활용)
+  // SVG 곡선 경로 및 높이 계산 (libs/utils.ts 활용)
   const { pathD, containerHeight } = useMemo(
     () => calculatePathD(memories.length),
     [memories.length],
   );
 
-  // 4. 노드 위치 계산 (libs/utils.ts 활용)
+  // 노드 위치 계산 (libs/utils.ts 활용)
   const nodePositions = useMemo(
     () => calculateNodePositions(memories),
     [memories],
   );
 
-  // ─── Side Effects ───────────────────────────────────────────────────────────
-  // 🎯 1. 여정 지도 진입 시 BGM 자동으로 재생 시작
-  useEffect(() => {
-    setMusicPlaying(true);
-  }, [setMusicPlaying]);
-
-  // 🎯 2. 모든 챕터를 완료하면 /proposal 페이지로 자동 이동
+  // 🎯 모든 챕터를 완료하면 /proposal 페이지로 자동 이동
   useEffect(() => {
     if (isAllCompleted) {
       const timer = setTimeout(() => {

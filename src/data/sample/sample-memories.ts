@@ -9,7 +9,8 @@ export const sampleMemories: Memory[] = [
     date: "20XX.XX.XX",
     story:
       "이곳은 샘플 페이지입니다. 정답을 맞추면 둘만의 소중한 첫 만남과 비밀스러운 추억 이야기가 열립니다.",
-    unlocked: true,
+    unlocked: false,
+    isCompleted: false,
     quiz: {
       question: "이 샘플 페이지를 열어보기 위한 정답 선택지는 무엇일까요?",
       options: [
@@ -34,6 +35,7 @@ export const sampleMemories: Memory[] = [
     story:
       "시원한 바람과 파도 소리가 가득했던 날. 비밀 질문을 통과하시면 그날 우리가 나누었던 진짜 대화와 사진들을 확인하실 수 있습니다.",
     unlocked: false,
+    isCompleted: false,
     quiz: {
       question: "샘플 퀴즈: 우리가 바닷가에서 가장 먼저 먹었던 디저트는?",
       options: [
@@ -58,6 +60,7 @@ export const sampleMemories: Memory[] = [
     story:
       "서로의 손을 잡고 평생을 약속하는 순간. 올바른 비밀번호를 입력하시면 감동적인 프러포즈 영상이 재생됩니다.",
     unlocked: false,
+    isCompleted: false,
     quiz: {
       question: "샘플 퀴즈: 앞으로 우리가 함께 만들어갈 날들은 어떨까요?",
       options: ["매일매일 행복한 날들 💍"],

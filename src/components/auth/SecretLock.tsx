@@ -48,8 +48,7 @@ export default function SecretLock({
 
       // 2) BGM 설정 및 재생
       setMusicBySampleMode(false);
-      setVideoBySampleMode(false);
-      setMusicPlaying(true); // 🎯 명확한 액션 이름 적용
+      setMusicPlaying(true);
 
       // 3) 비디오 소스 설정 (복호화된 실제 영상)
       setVideoBySampleMode(false);
@@ -69,8 +68,7 @@ export default function SecretLock({
 
     // 2) 샘플 BGM 설정 및 재생
     setMusicBySampleMode(true);
-    setVideoBySampleMode(true);
-    setMusicPlaying(true); // 🎯 명확한 액션 이름 적용
+    setMusicPlaying(true);
 
     // 3) 비디오 소스 설정 (샘플 영상)
     setVideoBySampleMode(true);

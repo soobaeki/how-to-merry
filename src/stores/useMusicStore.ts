@@ -1,6 +1,14 @@
 import { decryptMusic } from "@/libs/crypto";
 import { create } from "zustand";
 
+// ─── 클라이언트 싱글톤 Audio 객체 선언 ────────────────────────────────────
+const isClient = typeof window !== "undefined";
+const bgmAudio = isClient ? new Audio() : null;
+
+if (bgmAudio) {
+  bgmAudio.loop = true;
+}
+
 /**
  * -----------------------------------------------------------------------------
  * 🎵 BGM 음악 상태 관리 인터페이스 (MusicState)
@@ -45,7 +53,7 @@ interface MusicState {
  * 🏪 BGM 전역 스토어 (useMusicStore)
  * -----------------------------------------------------------------------------
  */
-export const useMusicStore = create<MusicState>((set) => ({
+export const useMusicStore = create<MusicState>((set, get) => ({
   // ─── 초기 상태 (Initial State) ──────────────────────────────────────────────
   isMusicPlaying: false,
   isMuted: false,
@@ -53,17 +61,64 @@ export const useMusicStore = create<MusicState>((set) => ({
 
   // ─── 액션 구현부 (Actions Impl) ──────────────────────────────────────────────
   actions: {
-    setMusicPlaying: (isMusicPlaying) => set({ isMusicPlaying }),
-    setIsMuted: (isMuted) => set({ isMuted }),
-    setMusicUrl: (musicUrl) => set({ musicUrl }),
+    // 🎧 1. musicUrl 경로를 설정하고 오디오 소스를 변경
+    setMusicUrl: (musicUrl) => {
+      set({ musicUrl });
 
-    setMusicBySampleMode: (isSample) =>
-      set({
-        musicUrl: isSample ? "/music/sample-bgm.mp3" : decryptMusic(),
-      }),
+      if (!bgmAudio) return;
 
-    toggleMusicPlay: () =>
-      set((state) => ({ isMusicPlaying: !state.isMusicPlaying })),
+      if (musicUrl) {
+        bgmAudio.src = musicUrl;
+      } else {
+        bgmAudio.pause();
+        bgmAudio.src = "";
+        set({ isMusicPlaying: false });
+      }
+    },
+
+    // 🎯 2. 샘플 모드에 따라 musicUrl 결정
+    setMusicBySampleMode: (isSample) => {
+      const targetUrl = isSample ? "/music/sample-bgm.mp3" : decryptMusic();
+      get().actions.setMusicUrl(targetUrl);
+    },
+
+    // 🎵 3. 재생 / 일시정지 제어
+    setMusicPlaying: (isMusicPlaying) => {
+      set({ isMusicPlaying });
+
+      if (!bgmAudio) return;
+
+      const currentUrl = get().musicUrl;
+
+      // musicUrl이 없는데 재생하려고 할 때 기본값 세팅
+      if (isMusicPlaying && !currentUrl) {
+        get().actions.setMusicUrl("/music/sample-bgm.mp3");
+        return;
+      }
+
+      if (isMusicPlaying) {
+        bgmAudio.play().catch((err) => {
+          console.warn("BGM 재생 차단됨:", err);
+          set({ isMusicPlaying: false });
+        });
+      } else {
+        bgmAudio.pause();
+      }
+    },
+
+    // 🔇 4. 음소거 제어
+    setIsMuted: (isMuted) => {
+      set({ isMuted });
+      if (bgmAudio) {
+        bgmAudio.muted = isMuted;
+      }
+    },
+
+    // 🔄 5. 재생 상태 토글
+    toggleMusicPlay: () => {
+      const nextState = !get().isMusicPlaying;
+      get().actions.setMusicPlaying(nextState);
+    },
   },
 }));
 

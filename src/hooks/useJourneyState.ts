@@ -57,6 +57,7 @@ export function useJourneyState() {
   const memories: Memory[] = initialMemories.map((memory) => ({
     ...memory,
     unlocked: currentUnlockedIds.includes(memory.id),
+    isCompleted: currentCompletedIds.includes(memory.id),
   }));
 
   // 전체 완료여부

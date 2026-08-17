@@ -17,37 +17,31 @@ export default function QuizCard({
   question,
   options,
   answerIndex,
-  hints = [],
+  hints,
   story,
   onCorrect,
 }: QuizProps) {
   const [selected, setSelected] = useState<number | null>(null);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [randomHint, setRandomHint] = useState<string>("");
+  const [hint, setHint] = useState<string>("");
+
+  const isCorrect = selected === answerIndex;
 
   const handleSelect = (index: number) => {
     if (selected !== null) return; // 이미 골랐으면 중복 클릭 방지
 
     setSelected(index);
-    const correct = index === answerIndex;
-    setIsCorrect(correct);
 
-    // 🎯 틀렸을 경우 hints 배열에서 무작위로 1개 선택
-    if (!correct) {
-      if (hints && hints.length > 0) {
-        const randomIndex = Number(getRandomElement(hints) ?? 1);
-        setRandomHint(hints[randomIndex]);
-      } else {
-        setRandomHint("앗, 이건 아니었는데 ㅋㅋ"); // hints가 비어있을 때 기본 문구
-      }
+    // 오답일 경우 무조건 hints 배열에서 무작위 선택
+    if (index !== answerIndex) {
+      const randomIndex = getRandomElement(hints) as number;
+      setHint(hints[randomIndex]);
     }
   };
 
   // 🎯 다시 고르기 핸들러
   const handleReset = () => {
     setSelected(null);
-    setIsCorrect(null);
-    setRandomHint("");
+    setHint("");
   };
 
   return (
@@ -107,7 +101,7 @@ export default function QuizCard({
             </>
           ) : (
             <>
-              <p className="font-bold text-red-400">{randomHint}</p>
+              <p className="font-bold text-red-400">{hint}</p>
               <button
                 onClick={handleReset}
                 className="mt-4 w-full rounded-full bg-gray-300 py-3 text-gray-700 font-semibold hover:bg-gray-400 transition cursor-pointer"
