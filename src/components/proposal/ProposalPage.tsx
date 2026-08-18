@@ -5,7 +5,7 @@ import { RotateCcw, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { useJourneyState } from "@/hooks/useJourneyState";
+import { useJourney } from "@/hooks/useJourney";
 import { useMusicActions } from "@/stores/useMusicStore";
 import { useVideoSrc } from "@/stores/useVideoStore";
 
@@ -18,7 +18,7 @@ export default function ProposalPage() {
   const router = useRouter();
 
   // ─── Custom Hooks & Store Selectors ─────────────────────────────────────────
-  const { resetJourney } = useJourneyState();
+  const { resetJourney } = useJourney();
   const { setMusicPlaying } = useMusicActions(); // 🎯 수정: setIsPlaying -> setMusicPlaying
   const videoSrc = useVideoSrc();
 

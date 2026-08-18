@@ -1,7 +1,7 @@
 "use client";
 
 import QuizCard from "@/components/quest/QuizCard";
-import { useJourneyState } from "@/hooks/useJourneyState";
+import { useJourneyState } from "@/hooks/useJourney";
 import { cn } from "@/libs/utils";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";

@@ -1,13 +1,11 @@
 "use client";
 
+import { useJourney } from "@/hooks/useJourney";
+import { calculateNodePositions, calculatePathD } from "@/libs/utils";
+import { useIsMusicPlaying, useMusicActions } from "@/stores/useMusicStore";
 import { RotateCcwIcon, Video, Volume2, VolumeX } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
-
-import { useJourneyState } from "@/hooks/useJourneyState";
-import { calculateNodePositions, calculatePathD } from "@/libs/utils";
-import { useIsMusicPlaying, useMusicActions } from "@/stores/useMusicStore";
-
 import JourneyFooter from "./JourneyFooter";
 import JourneyHeader from "./JourneyHeader";
 import LocationNode from "./LocationNode";
@@ -22,8 +20,7 @@ export default function JourneyMap() {
 
   // ─── Custom Hooks & Store Selectors ─────────────────────────────────────────
   // 여정 상태 제어 커스텀 훅
-  const { memories, completedIds, isAllCompleted, resetJourney } =
-    useJourneyState();
+  const { memories, completedIds, isAllCompleted, resetJourney } = useJourney();
 
   // Zustand BGM 음악 스토어 구독
   const isMusicPlaying = useIsMusicPlaying();
@@ -147,8 +144,8 @@ export default function JourneyMap() {
                 top: pos.y,
               }}
               className={
-                !memory.unlocked || isCompleted
-                  ? "pointer-events-none"
+                !memory.unlocked
+                  ? "pointer-events-none opacity-75"
                   : "cursor-pointer"
               }
             >
