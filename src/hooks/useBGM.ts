@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
  */
 export function useBGM(src: string = "/music/bgm.mp3") {
   // Zustand 스토어에서 현재 음악 재생 여부 구독
-  const isPlaying = useMusicStore((state) => state.isPlaying);
+  const isMusicPlaying = useMusicStore((state) => state.isMusicPlaying);
 
   // 브라우저 단일 Audio 인스턴스 참조를 위한 Ref
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -49,7 +49,7 @@ export function useBGM(src: string = "/music/bgm.mp3") {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
+    if (isMusicPlaying) {
       // play()는 Promise를 반환하는 비동기 함수입니다.
       const playPromise = audio.play();
 
@@ -66,5 +66,5 @@ export function useBGM(src: string = "/music/bgm.mp3") {
     } else {
       audio.pause();
     }
-  }, [isPlaying]);
+  }, [isMusicPlaying]);
 }

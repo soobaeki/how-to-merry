@@ -65,27 +65,43 @@ export default function JourneyMap() {
         <div className="absolute bottom-10 left-1/2 h-28 w-28 rounded-full bg-yellow100 blur-3xl" />
       </div>
 
-      {/* ─── Floating Action Buttons ────────────────────────────────────────── */}
-      {/* 1. 초기화 버튼 */}
-      <button
-        type="button"
-        onClick={resetJourney}
-        aria-label="초기화"
-        className="absolute top-4 left-4 z-30 rounded-full p-2 text-gray-400 transition-colors hover:bg-pink-50 hover:text-pink-500"
-        title="초기화"
-      >
-        <RotateCcwIcon className="h-5 w-5 cursor-pointer transition-transform duration-200 hover:-rotate-110" />
-      </button>
+      {/* ─── Floating Action Buttons (상단 컨트롤 바) ───────────────────────── */}
+      {/* 1. 좌측 컨트롤 그룹 (초기화 + 프러포즈 영상) */}
+      <div className="absolute top-4 left-4 z-30 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={resetJourney}
+          aria-label="초기화"
+          className="rounded-full bg-white/80 p-2.5 text-gray-400 shadow-sm backdrop-blur-sm transition-colors hover:bg-pink-50 hover:text-pink-500"
+          title="초기화"
+        >
+          <RotateCcwIcon className="h-5 w-5 cursor-pointer transition-transform duration-200 hover:rotate-[-110deg]" />
+        </button>
 
-      {/* 2. 프러포즈 영상 보기 버튼 */}
+        <button
+          type="button"
+          onClick={handleGoToProposal}
+          aria-label="프러포즈 영상 보기"
+          className="rounded-full bg-white/80 p-2.5 text-gray-400 shadow-sm backdrop-blur-sm transition-colors hover:bg-pink-50 hover:text-pink-500"
+          title="프러포즈 영상 보기"
+        >
+          <Video className="h-5 w-5 cursor-pointer fill-current transition-transform duration-200 hover:scale-110" />
+        </button>
+      </div>
+
+      {/* 2. 우측 컨트롤 그룹 (음악 토글) */}
       <button
         type="button"
-        onClick={handleGoToProposal}
-        aria-label="프러포즈 영상 보기"
-        className="absolute top-4 left-11 z-30 rounded-full p-2 text-gray-400 transition-colors hover:bg-pink-50 hover:text-pink-500"
-        title="프러포즈 영상 보기"
+        onClick={toggleMusicPlay}
+        aria-label={isMusicPlaying ? "음악 일시정지" : "음악 재생"}
+        className="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-white/80 p-2.5 text-gray-400 shadow-sm backdrop-blur-sm transition-colors hover:bg-pink-50 hover:text-pink-500"
+        title={isMusicPlaying ? "음악 일시정지" : "음악 재생"}
       >
-        <Video className="h-5 w-5 cursor-pointer fill-current transition-transform duration-200 hover:scale-110" />
+        {isMusicPlaying ? (
+          <Volume2 className="h-5 w-5 fill-current transition-transform duration-200 hover:scale-110" />
+        ) : (
+          <VolumeX className="ml-0.5 h-5 w-5 fill-current transition-transform duration-200 hover:scale-110" />
+        )}
       </button>
 
       {/* 3. 소리 끄기 / 켜기 토글 버튼 */}

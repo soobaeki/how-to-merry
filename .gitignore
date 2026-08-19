@@ -49,4 +49,4 @@ public/videos/*
 !public/videos/.gitkeep
 
 # scripts/ 폴더 내 모든 파일 무시
-scripts/*
+# scripts/*
