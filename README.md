@@ -1,5 +1,7 @@
 # 💍 Our Special Story - Proposal Web Service
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-FF69B4?style=for-the-badge&logo=github&logoColor=white)](https://soobaeki.github.io/how-to-merry/)
+
 > 사랑하는 연인을 위해 제작한 개인 맞춤형 디지털 프러포즈 웹사이트입니다.  
 > 함께한 추억을 차곡차곡 담아 둘만의 특별한 순간을 기록하고 전달합니다.
 
