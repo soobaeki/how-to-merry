@@ -9,9 +9,10 @@
 
 ## ✨ 주요 기능 (Key Features)
 
-- 📖 **Interactive Chapter**: 둘만의 소중한 추억과 에피소드를 챕터별로 확인
+- 📖 **Interactive Chapter**: 둘만의 소중한 추억과 에피소드를 챕터별로 확인하는 여정 지도
+- 🎵 **Global BGM & Seamless Media**: 배경음악(BGM)과 프러포즈 비디오 간의 매끄러운 오디오 전환 및 브라우저 자동재생 정책(Autoplay Policy) 예외 처리
 - 🔒 **End-to-End Data Security**: 소중한 개인 데이터(질문지, 영상)를 AES 기술로 암호화하여 원본 노출 방지
-- 🎬 **Media Streaming**: 추억이 담긴 동영상을 매끄럽게 감상할 수 있는 미디어 플레이어
+- 🎬 **Encrypted Video Player**: 암호화된 비디오 데이터를 안전하게 스트리밍/재생하는 커스텀 플레이어
 - 📱 **Fully Responsive**: 모바일, 태블릿, PC 등 모든 기기에 최적화된 반응형 디자인
 
 ---
@@ -22,7 +23,8 @@
 
 | 구분                   | 기술 스택                                                                 | 세부 사항                                                                                                                            |
 | :--------------------- | :------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------- |
-| **Core**               | Next.js 16<br>React 19<br>TypeScript 5                                    | App Router, Static Export (`output: 'export'`) 적용<br>Babel React Compiler 적용을 통한 자동 렌더링 최적화<br>타입 안정성 보장       |
+| **Core**               | Next.js 16<br>React 19<br>TypeScript 5                                    | App Router, Static Export (`output: 'export'`) 적용<br>React Compiler 적용을 통한 자동 렌더링 최적화<br>Strict Type Safety 보장      |
+| **State Management**   | Zustand 5                                                                 | **전역 상태 관리 (BGM / Video 재생 상태 및 여정 진행도 관리)**<br>비동기 미디어 재생 예외 처리 및 브라우저 Autoplay Policy 대응      |
 | **Styling & UI**       | Tailwind CSS v4<br>Framer Motion<br>Lucide React<br>clsx / tailwind-merge | `@tailwindcss/postcss` 기반 인터랙티브 UI<br>감성적인 모션 애니메이션 구현<br>경량화 아이콘 시스템 구성<br>조건부 클래스명 병합 처리 |
 | **Security & Tooling** | Crypto-js<br>tsx<br>dotenv                                                | AES-256 클라이언트 측 데이터 복호화<br>TypeScript 기반 데이터 암호화 스크립트 직접 실행<br>로컬 환경 변수 세팅 및 관리               |
 | **Deployment**         | GitHub Pages                                                              | GitHub Actions 기반 CI/CD 자동 배포 파이프라인 구축                                                                                  |
@@ -65,7 +67,11 @@ npm run encrypt
 
 npm run encrypt:video
 
-# 3. 전체 데이터(텍스트 + 비디오) 일괄 암호화
+# 2. 비디오 데이터 암호화
+
+npm run encrypt:music
+
+# 4. 전체 데이터(텍스트 + 비디오) 일괄 암호화
 
 npm run encrypt:all
 ```
