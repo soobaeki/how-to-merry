@@ -35,7 +35,7 @@
 
 ## 🔒 보안 및 배포 구조 (Security & Deployment)
 
-1. **데이터 암호화**: 로컬 환경에서 텍스트 데이터(`memories-encrypted.ts`)와 프러포즈 영상(`proposal-video`)을 AES-256 알고리즘으로 암호화하여 배포에 활용합니다.
+1. **데이터 암호화**: 로컬 환경에서 텍스트 데이터(`data-encrypted.ts`), 영상(`video-encrypted.ts`), 음악(`music-encrypted.ts`)을 AES-256 알고리즘으로 암호화하여 배포에 활용합니다.
 2. **클라이언트 복호화**: 런타임 시 환경 변수(`NEXT_PUBLIC_SECRET_KEY`)를 통해 정당한 사용자에게만 복호화된 스토리를 제공합니다.
 3. **자동 배포 Pipeline**: GitHub Actions를 이용하여 main 브랜치 push 시 정적 사이트로 자동 빌드 및 배포됩니다.
 
@@ -55,7 +55,7 @@ NEXT_PUBLIC_SECRET_KEY=your_secret_key_here
 
 ### 2. 데이터 암호화 스크립트 (Data Encryption)
 
-소중한 추억 데이터(텍스트/영상)를 수정한 뒤, 암호화 파일(`memories-encrypted.ts`)을 새롭게 갱신할 때 사용합니다.
+데이터, 영상, 음악을 암호화하여 (`***-encrypted.ts`)을 새롭게 갱신할 때 사용합니다.
 
 ```bash
 
