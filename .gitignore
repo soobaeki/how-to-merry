@@ -45,8 +45,15 @@ src/data/memories.ts
 
 # public/videos 폴더 내 모든 파일 무시
 public/videos/*
-# 단, .gitkeep 파일은 추적 대상에 포함
+# 단, 아래 파일은 추적 대상에 포함
 !public/videos/.gitkeep
+!public/videos/sample-video.mp4
+
+# public/music 폴더 내 모든 파일 무시
+public/music/*
+# 단, 아래 파일은 추적 대상에 포함
+!public/music/sample-bgm.mp3
+
 
 # scripts/ 폴더 내 모든 파일 무시
 # scripts/*
