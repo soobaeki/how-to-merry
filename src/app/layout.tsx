@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "소중한 추억과 마음을 담아 만든 특별한 공간입니다.",
 
   icons: {
-    icon: "/icon.svg",
+    icon: "./icon.svg",
   },
 
   openGraph: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "How to Merry",
     images: [
       {
-        url: "/og-image.png",
+        url: "./og-image.png",
         width: 1200,
         height: 630,
         alt: "How to Merry Preview",
