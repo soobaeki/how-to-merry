@@ -34,6 +34,7 @@ jobs:
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
+          NEXT_PUBLIC_CORRECT_PASSWORD: ${{secrets.NEXT_PUBLIC_CORRECT_PASSWORD}}
         run: npm run build
 
       - name: Upload artifact
