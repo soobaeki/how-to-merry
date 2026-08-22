@@ -1,6 +1,11 @@
 import { decryptMusic } from "@/libs/crypto";
 import { create } from "zustand";
 
+/**
+ * 🎵 BGM 샘플 파일 경로
+ */
+const SAMPLE_BGM_PATH = "./music/sample-bgm.mp3";
+
 // ─── 클라이언트 싱글톤 Audio 객체 선언 ────────────────────────────────────
 const isClient = typeof window !== "undefined";
 const bgmAudio = isClient ? new Audio() : null;
@@ -57,7 +62,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
   // ─── 초기 상태 (Initial State) ──────────────────────────────────────────────
   isMusicPlaying: false,
   isMuted: false,
-  musicUrl: "/music/sample-bgm.mp3",
+  musicUrl: SAMPLE_BGM_PATH,
 
   // ─── 액션 구현부 (Actions Impl) ──────────────────────────────────────────────
   actions: {
@@ -78,7 +83,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
 
     // 🎯 2. 샘플 모드에 따라 musicUrl 결정
     setMusicBySampleMode: (isSample) => {
-      const targetUrl = isSample ? "/music/sample-bgm.mp3" : decryptMusic();
+      const targetUrl = isSample ? SAMPLE_BGM_PATH : decryptMusic();
       get().actions.setMusicUrl(targetUrl);
     },
 
@@ -92,7 +97,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
 
       // musicUrl이 없는데 재생하려고 할 때 기본값 세팅
       if (isMusicPlaying && !currentUrl) {
-        get().actions.setMusicUrl("/music/sample-bgm.mp3");
+        get().actions.setMusicUrl(SAMPLE_BGM_PATH);
         return;
       }
 

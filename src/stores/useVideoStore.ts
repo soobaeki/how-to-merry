@@ -2,6 +2,11 @@ import { decryptVideo } from "@/libs/crypto";
 import { create } from "zustand";
 
 /**
+ * 🎬 비디오 샘플 파일 경로
+ */
+const SAMPLE_VIDEO_PATH = "./videos/sample-video.mp4";
+
+/**
  * -----------------------------------------------------------------------------
  * 🎬 비디오 상태 관리 인터페이스 (VideoState)
  * -----------------------------------------------------------------------------
@@ -46,7 +51,7 @@ export const useVideoStore = create<VideoState>((set) => ({
   // ─── 초기 상태 (Initial State) ──────────────────────────────────────────────
   isVideoPlaying: false,
   isVideoEnded: false,
-  videoSrc: "/videos/sample-video.mp4",
+  videoSrc: SAMPLE_VIDEO_PATH,
 
   // ─── 액션 구현부 (Actions Impl) ──────────────────────────────────────────────
   actions: {
@@ -56,7 +61,7 @@ export const useVideoStore = create<VideoState>((set) => ({
 
     setVideoBySampleMode: (isSample) =>
       set({
-        videoSrc: isSample ? "/videos/sample-video.mp4" : decryptVideo(),
+        videoSrc: isSample ? SAMPLE_VIDEO_PATH : decryptVideo(),
       }),
   },
 }));
