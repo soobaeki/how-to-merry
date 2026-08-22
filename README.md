@@ -95,3 +95,5 @@ npm run dev
 
 npm run build
 ```
+
+2026.08.22 프로젝트 종료.
