@@ -32,7 +32,7 @@ async function getKey() {
   return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt: enc.encode("2026-03-07-secret-key"),
+      salt: enc.encode("1998-01-04-secret-key"),
       iterations: 100000,
       hash: "SHA-256",
     },
